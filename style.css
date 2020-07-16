@@ -1,0 +1,13 @@
+.list-unstyled{
+  padding: 30px;
+  border-radius: 15px;
+}
+.list-unstyled:hover {
+  -webkit-transform: scale(1.3);
+  -ms-transform: scale(1.5);
+  transform: scale(1.05);
+  transition: 1s ease;
+  box-shadow:0 10px 10px rgb(109, 108, 106);
+  border-radius: 15px;
+  padding: 15px;
+}
