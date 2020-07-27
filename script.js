@@ -9,10 +9,11 @@ const loadMoreToggle = () => {
 const callApi = async () => {
     let url = `
     https://newsapi.org/v2/top-headlines?country=us&apiKey=1b0ce20ffbab4953850adad597e85016&page=${currentPage}`
+    console.log("dddddff",url)
     let data = await fetch(url)
     let result = await data.json()
-    newsList = result.articles
-    currentPage++
+    newsList = newsList.concat(result.articles) // concat 
+    console.log("ddd",result)
     render(newsList)
 }
 
@@ -34,6 +35,35 @@ const searchByKeyword = async () => {
     newsList = result.articles
     render(newsList)
 }
+
+const searchBySource = (source) => {
+    let filteredList = newsList.filter((item) => item.source.name === source);
+    render(filteredList);
+  };
+
+const renderSource = () => {
+    let sources = newsList.map((item) => item.source.name);
+    let result = {};
+  
+    for (let i = 0; i < sources.length; i++) {
+      if (sources[i] in result) {
+        result[sources[i]]++;
+      } else {
+        result[sources[i]] = 1;
+      }
+    }
+  
+    let keys = Object.keys(result);
+    let sourceHTML = keys
+      .map(
+        (key) =>
+          `<input type="checkbox" onchange="searchBySource('${key}')">${key}:${result[key]}   `
+      )
+      .join("");
+  
+    document.getElementById("sourceArea").innerHTML = sourceHTML;
+  };
+
 
 const render = (list) => {
     let newsHTML = list.map(item => {
